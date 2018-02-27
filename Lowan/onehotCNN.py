@@ -128,7 +128,7 @@ def main() :
     classifier.fit(indata, outdata, validation_split=0.33, epochs=20, batch_size=10)
     end = time.time()
     print("Model took %0.2f seconds" %(end - start))
-    score = model.evaluate(indata_test, outdata_test, verbose=0)
+    score = classifier.evaluate(indata_test, outdata_test, verbose=0)
     print(score)
 
 
