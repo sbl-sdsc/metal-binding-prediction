@@ -11,6 +11,10 @@ encoded_seq = blosum62_encoder(seq)
 
 '''
 
+AMINO_ACIDS21 = ['A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'K', 'L', 'M', \
+                 'N', 'P', 'Q', 'R', 'S', 'T', 'V', 'W', 'X', 'Y']
+
+
 properties = {
     'A' : [1.28,0.05,1.00,0.31,6.11,0.42,0.23],
     'G' : [0.00,0.00,0.00,0.00,6.07,0.13,0.15],
@@ -64,6 +68,16 @@ blosum62 = {
 }
 
 
+def one_hot(s):
+    encode = [0] * len(AMINO_ACIDS21)
+    encode[AMINO_ACIDS21.index(s)] = 1
+    return encode
+
+
 property_encoder = lambda sequence: [properties[aa] for aa in sequence]
 
 blosum62_encoder = lambda sequence: [blosum62[aa] for aa in sequence]
+
+onehot_encoder = lambda sequence: [*map(one_hot, sequence)]
+
+
