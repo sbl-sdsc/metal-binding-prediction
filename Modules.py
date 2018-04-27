@@ -3,12 +3,14 @@
 
 # # Data Generator
 
-# In[2]:
+# In[5]:
 
 
 import numpy as np
 import keras
 
+
+# ### Note that OneHotGenerator supports single char to vector translation
 
 # In[3]:
 
@@ -293,7 +295,7 @@ class Trainer():
                                  use_multiprocessing=False, 
                                  workers=4,
                                  verbose=1)
-        self.on_train_end()
+        self.post_train()
         
 #     def stop(self, error_string="Unspecified"):
 #         self.model.stop_training = True
