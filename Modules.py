@@ -295,16 +295,16 @@ class Trainer():
                                  use_multiprocessing=False, 
                                  workers=4,
                                  verbose=1)
-        self.post_train()
+        self.post_train(epoch)
         
 #     def stop(self, error_string="Unspecified"):
 #         self.model.stop_training = True
 #         print ("Training stopped. Reason:", error_string)
     
-    def post_train(self):
+    def post_train(self, epoch):
         print ("[End of Training]")
         for c in self.callbacks:
-            c.post_train(epoch=self.epoch, batch=len(self.train_gen))
+            c.post_train(epoch=epoch, batch=len(self.train_gen))
         
 
 
@@ -377,8 +377,8 @@ class F1_history(keras.callbacks.Callback):
 
     def post_train(self, epoch, batch):
         F1_over_epoch = []
-        for i in range(self.epoch):
-            F1_over_epoch.append(np.average(cb.f1_scores[i*batch:(i+1)*batch]))
+        for i in range(epoch):
+            F1_over_epoch.append(np.average(self.f1_scores[i*batch:(i+1)*batch]))
 
         fig = plt.figure(0)
         ax = fig.add_subplot(111)
