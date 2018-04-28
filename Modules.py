@@ -10,7 +10,7 @@ import numpy as np
 import keras
 
 
-# ### Note that OneHotGenerator supports single char to vector translation
+# ### OneHotGenerator supports single char to vector translation
 
 # In[3]:
 
@@ -158,43 +158,6 @@ class ProtVecGenerator(keras.utils.Sequence):
         return X, y     
 
 
-# In[5]:
-
-
-class GeneratorArray(keras.utils.Sequence):
-    
-    'Gererate data for Keras'
-    def __init__(self, generators):
-        'Initialization'
-        for gen in generators:
-            assert gen is not None
-        self.generators = generators
-        
-        self.on_epoch_end()
-    
-    def __len__(self):
-        'Get the number of batches per epoch'
-        return min([len(gen) for gen in self.generators])
-        
-    def __getitem__(self, index):
-        'Generate one batch of data'
-        X = []
-        Y = None
-        for gen in self.generators:
-            x, y = gen[index]
-            X.append(x)
-            if Y is None:
-                Y = y
-            assert Y == y
-            
-        return X, Y
-        
-    def on_epoch_end(self):
-        'Update indices at the end of each epoch'
-        for gen in self.generators:
-            gen.on_epoch_end()
-
-
 # In[6]:
 
 
@@ -242,6 +205,43 @@ class GenericGenerator(keras.utils.Sequence):
         self.indices = np.arange(len(self.sequences))
         if self.shuffle == True:
             np.random.shuffle(self.indices)
+
+
+# In[5]:
+
+
+class GeneratorArray(keras.utils.Sequence):
+    
+    'Gererate data for Keras'
+    def __init__(self, generators):
+        'Initialization'
+        for gen in generators:
+            assert gen is not None
+        self.generators = generators
+        
+        self.on_epoch_end()
+    
+    def __len__(self):
+        'Get the number of batches per epoch'
+        return min([len(gen) for gen in self.generators])
+        
+    def __getitem__(self, index):
+        'Generate one batch of data'
+        X = []
+        Y = None
+        for gen in self.generators:
+            x, y = gen[index]
+            X.append(x)
+            if Y is None:
+                Y = y
+            assert Y == y
+            
+        return X, Y
+        
+    def on_epoch_end(self):
+        'Update indices at the end of each epoch'
+        for gen in self.generators:
+            gen.on_epoch_end()
 
 
 # # Model Trainer
