@@ -3,14 +3,14 @@
 
 # # Data Generator
 
-# In[1]:
+# In[3]:
 
 
 import numpy as np
 import keras
 
 
-# In[2]:
+# In[5]:
 
 
 class OneHotGenerator(keras.utils.Sequence):
@@ -19,6 +19,7 @@ class OneHotGenerator(keras.utils.Sequence):
     def __init__(self, 
                  sequences, 
                  labels, 
+                 cluster_numbers,
                  translator,
                  batch_size = 100, 
                  input_shape=(706,20),
@@ -27,6 +28,17 @@ class OneHotGenerator(keras.utils.Sequence):
         'Initialization'
         self.sequences = sequences
         self.labels = labels
+        
+        #Clusters
+        self.clusters = {}
+        for i, c in enumerate(cluster_numbers):
+            if c not in self.clusters.keys():
+                self.clusters[c] = []
+            self.clusters[c].append(i)
+        
+        print ("Number of clusters", len(self.clusters.keys()))
+#         print ("First cluster :", self.clusters.items())
+        
         self.translator = translator
         
         self.batch_size = batch_size
@@ -52,7 +64,12 @@ class OneHotGenerator(keras.utils.Sequence):
         
     def on_epoch_end(self):
         'Update indices at the end of each epoch'
-        self.indices = np.arange(len(self.sequences))
+        self.indices = []
+        for i in range(len(self.sequences)):
+            cluster_index = np.random.choice(list(self.clusters.keys()))
+            self.indices.append(np.random.choice(self.clusters[cluster_index]))
+        
+#         self.indices = np.arange(len(self.sequences))
         if self.shuffle == True:
             np.random.shuffle(self.indices)
             

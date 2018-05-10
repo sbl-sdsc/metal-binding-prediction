@@ -1,2 +1,5 @@
 user_modelName_epoch        F1Score
 Tian_BRNN_1        F1: 0.0665541463415
+Tian_Test_2        F1: 0.0942429268293
+Tian_Test_3        F1: 0.200490731707
+Tian_Test_10        F1: 0.229753658537
