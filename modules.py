@@ -3,14 +3,14 @@
 
 # # Data Generator
 
-# In[3]:
+# In[ ]:
 
 
 import numpy as np
 import keras
 
 
-# In[5]:
+# In[ ]:
 
 
 class OneHotGenerator(keras.utils.Sequence):
@@ -23,8 +23,7 @@ class OneHotGenerator(keras.utils.Sequence):
                  translator,
                  batch_size = 100, 
                  input_shape=(706,20),
-                 label_shape=(706,),
-                 shuffle=True):
+                 label_shape=(706,)):
         'Initialization'
         self.sequences = sequences
         self.labels = labels
@@ -36,15 +35,13 @@ class OneHotGenerator(keras.utils.Sequence):
                 self.clusters[c] = []
             self.clusters[c].append(i)
         
-        print ("Number of clusters", len(self.clusters.keys()))
-#         print ("First cluster :", self.clusters.items())
+#         print ("Number of clusters", len(self.clusters.keys()))
         
         self.translator = translator
         
         self.batch_size = batch_size
         self.input_shape = input_shape
         self.label_shape = label_shape
-        self.shuffle = shuffle
         
         self.on_epoch_end()
     
@@ -68,11 +65,7 @@ class OneHotGenerator(keras.utils.Sequence):
         for i in range(len(self.sequences)):
             cluster_index = np.random.choice(list(self.clusters.keys()))
             self.indices.append(np.random.choice(self.clusters[cluster_index]))
-        
-#         self.indices = np.arange(len(self.sequences))
-        if self.shuffle == True:
-            np.random.shuffle(self.indices)
-            
+                    
     def generate_data(self, sequences_temp, labels_temp):
         'Populate input and label tensors'
         X = np.zeros((self.batch_size, *self.input_shape))
@@ -98,7 +91,7 @@ class OneHotGenerator(keras.utils.Sequence):
         
 
 
-# In[3]:
+# In[ ]:
 
 
 class ProtVecGenerator(keras.utils.Sequence):
@@ -108,20 +101,27 @@ class ProtVecGenerator(keras.utils.Sequence):
                  sequences, 
                  labels, 
                  translator,
+                 cluster_numbers,
                  batch_size = 100, 
                  input_shape=(706,20),
                  label_shape=(706,),
-                 shuffle=True, 
                  n_gram=3):
         'Initialization'
         self.sequences = sequences
         self.labels = labels
+        
+        #Clusters
+        self.clusters = {}
+        for i, c in enumerate(cluster_numbers):
+            if c not in self.clusters.keys():
+                self.clusters[c] = []
+            self.clusters[c].append(i)
+        
         self.translator = translator
         
         self.batch_size = batch_size
         self.input_shape = input_shape
         self.label_shape = label_shape
-        self.shuffle = shuffle
         self.n_gram=n_gram
         
         self.on_epoch_end()
@@ -142,9 +142,10 @@ class ProtVecGenerator(keras.utils.Sequence):
         
     def on_epoch_end(self):
         'Update indices at the end of each epoch'
-        self.indices = np.arange(len(self.sequences))
-        if self.shuffle == True:
-            np.random.shuffle(self.indices)
+        self.indices = []
+        for i in range(len(self.sequences)):
+            cluster_index = np.random.choice(list(self.clusters.keys()))
+            self.indices.append(np.random.choice(self.clusters[cluster_index]))  
             
     def generate_data(self, sequences_temp, labels_temp):
         'Populate input and label tensors'
@@ -173,7 +174,7 @@ class ProtVecGenerator(keras.utils.Sequence):
         return X, y     
 
 
-# In[4]:
+# In[ ]:
 
 
 class GenericGenerator(keras.utils.Sequence):
@@ -183,27 +184,41 @@ class GenericGenerator(keras.utils.Sequence):
                  sequences, 
                  labels, 
                  translator,
+                 cluster_numbers,
                  generate_func,
                  batch_size = 100, 
                  input_shape=(706,20),
-                 label_shape=(706,),
-                 shuffle=True):
+                 label_shape=(706,)):
         'Initialization'
         self.sequences = sequences
         self.labels = labels
+        
+        #Clusters
+        self.clusters = {}
+        for i, c in enumerate(cluster_numbers):
+            if c not in self.clusters.keys():
+                self.clusters[c] = []
+            self.clusters[c].append(i)
+        
         self.translator = translator
         self.generate_func = generate_func
         
         self.batch_size = batch_size
         self.input_shape = input_shape
         self.label_shape = label_shape
-        self.shuffle = shuffle
         
         self.on_epoch_end()
     
     def __len__(self):
         'Get the number of batches per epoch'
         return int(np.floor(len(self.sequences))/self.batch_size)
+      
+    def on_epoch_end(self):
+        'Update indices at the end of each epoch'
+        self.indices = []
+        for i in range(len(self.sequences)):
+            cluster_index = np.random.choice(list(self.clusters.keys()))
+            self.indices.append(np.random.choice(self.clusters[cluster_index]))  
         
     def __getitem__(self, index):
         'Generate one batch of data'
@@ -214,15 +229,9 @@ class GenericGenerator(keras.utils.Sequence):
         
         X, y = self.generate_func(sequences_temp, labels_temp)
         return X, y
-        
-    def on_epoch_end(self):
-        'Update indices at the end of each epoch'
-        self.indices = np.arange(len(self.sequences))
-        if self.shuffle == True:
-            np.random.shuffle(self.indices)
 
 
-# In[5]:
+# In[ ]:
 
 
 class GeneratorArray(keras.utils.Sequence):
@@ -249,25 +258,30 @@ class GeneratorArray(keras.utils.Sequence):
             X.append(x)
             if Y is None:
                 Y = y
-            assert Y == y
-            
         return X, Y
         
     def on_epoch_end(self):
         'Update indices at the end of each epoch'
-        for gen in self.generators:
-            gen.on_epoch_end()
+        assert len(self.generators > 0)
+        
+        indices = []
+        for i, gen in enumerate(self.generators):
+            if i == 0:
+                gen.on_epoch_end()
+                indices = gen.indices
+            else:
+                gen.indices = indices
 
 
 # # Model Trainer
 
-# In[6]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
 
 
-# In[7]:
+# In[ ]:
 
 
 class Trainer():
@@ -331,14 +345,14 @@ class Trainer():
 
 # # Evaluator
 
-# In[8]:
+# In[ ]:
 
 
 from sklearn.metrics import f1_score, precision_score, recall_score
 import numpy as np
 
 
-# In[9]:
+# In[ ]:
 
 
 class F1_history(keras.callbacks.Callback):

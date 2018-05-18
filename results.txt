@@ -1,5 +1,7 @@
 user_modelName_epoch        F1Score
 Tian_BRNN_1        F1: 0.0665541463415
-Tian_Test_2        F1: 0.0942429268293
-Tian_Test_3        F1: 0.200490731707
-Tian_Test_10        F1: 0.229753658537
+Tian_BRNN_70_oh_10        F1: 0.229753658537
+Tian_BRNN_50_oh_10        F1: 0.215434146341
+Tian_BRNN_90_oh_10        F1: 0.24354195122
+Tian_BRNN_100_oh_10        F1: 0.237165365854
+Tian_BRNN_90_oh_30        F1: 0.267469756098
