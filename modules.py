@@ -39,6 +39,7 @@ class OneHotGenerator(keras.utils.Sequence):
         
         self.translator = translator
         
+        # Referenced by Trainer
         self.batch_size = batch_size
         self.input_shape = input_shape
         self.label_shape = label_shape
@@ -241,7 +242,12 @@ class GeneratorArray(keras.utils.Sequence):
         'Initialization'
         for gen in generators:
             assert gen is not None
+        assert len(generators > 0)
         self.generators = generators
+        
+        self.batch_size = self.generators[0].batch_size
+        self.input_shape = self.generators[0].input_shape
+        self.label_shape = self.generators[0].label_shape
         
         self.on_epoch_end()
     
@@ -261,9 +267,7 @@ class GeneratorArray(keras.utils.Sequence):
         return X, Y
         
     def on_epoch_end(self):
-        'Update indices at the end of each epoch'
-        assert len(self.generators > 0)
-        
+        'Update indices at the end of each epoch'        
         indices = []
         for i, gen in enumerate(self.generators):
             if i == 0:

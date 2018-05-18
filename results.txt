@@ -5,3 +5,4 @@ Tian_BRNN_50_oh_10        F1: 0.215434146341
 Tian_BRNN_90_oh_10        F1: 0.24354195122
 Tian_BRNN_100_oh_10        F1: 0.237165365854
 Tian_BRNN_90_oh_30        F1: 0.267469756098
+Tian_Testing_2        F1: 0.0653531707317
