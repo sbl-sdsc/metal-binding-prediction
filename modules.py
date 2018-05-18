@@ -242,7 +242,7 @@ class GeneratorArray(keras.utils.Sequence):
         'Initialization'
         for gen in generators:
             assert gen is not None
-        assert len(generators > 0)
+        assert len(generators) > 0
         self.generators = generators
         
         self.batch_size = self.generators[0].batch_size
@@ -431,8 +431,12 @@ class F1_history(keras.callbacks.Callback):
                     + str(epoch) + '.png')
         
         file = open(post_train_args['result'], 'a')
-        file.write('\n' + post_train_args['user'] + '_' 
-                   + post_train_args['model'] + '_'
-                   + str(epoch) + '        F1: '
-                   + str(F1_over_epoch[-1]))
+        file.write(post_train_args['user'] + ',' 
+                   + post_train_args['model'] + ',' 
+                   + post_train_args['optimizer'] + ',' 
+                   + str(round(post_train_args['optimizer_config']['lr'], 3)) + ',' 
+                   + post_train_args['loss'] + ','
+                   + str(post_train_args['factor']) + ','
+                   + str(epoch) + ','
+                   + str(round(F1_over_epoch[-1], 3)) + '\n')
 
