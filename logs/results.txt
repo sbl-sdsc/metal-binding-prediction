@@ -11,3 +11,4 @@ Tian_Test2_1        F1: 0.0730029268293
 Tian,Test3,SGD,0.009999999776482582,binary_crossentropy,2.33,1,0.0771663414634
 Tian,Test3,SGD,0.01,binary_crossentropy,2.33,5,0.114
 Tian,BRNN_OH_Blosum62,SGD,0.001,binary_crossentropy,2.33,30,0.005
+Tian,CNN_BRNN,SGD,0.001,binary_crossentropy,2.33,1,0.108
