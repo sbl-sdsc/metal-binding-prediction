@@ -12,3 +12,5 @@ Tian,Test3,SGD,0.009999999776482582,binary_crossentropy,2.33,1,0.0771663414634
 Tian,Test3,SGD,0.01,binary_crossentropy,2.33,5,0.114
 Tian,BRNN_OH_Blosum62,SGD,0.001,binary_crossentropy,2.33,30,0.005
 Tian,CNN_BRNN,SGD,0.001,binary_crossentropy,2.33,1,0.108
+////////////////////////////////////////////////////////////////////////////////
+PART2,ZN,SGD,0.01,categorical_crossentropy,2.33,3,0.475
