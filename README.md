@@ -14,7 +14,17 @@ Methods to predict metal binding sites in a protein by it's amino acid sequence
 
 **models** contains all saved models (*.json) and weights (*.h5) for all ligandIds. These are used with Keras.
 
+**modules.py** stores all functions (encoded data generators, trainer, etc)
 
+**metal_prediction.ipynb** predicts what type of metal ion a sequence binds to (first step)
+
+**MBS_prediction.ipynb** predicts where in a sequence a metal ion binds to (second step)
+	
+
+
+	
+
+predictor.ipynb
 
 
 
