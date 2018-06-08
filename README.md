@@ -14,7 +14,7 @@ Methods to predict metal binding sites in a protein by it's amino acid sequence
 
 [models](https://github.com/sbl-sdsc/metal-binding-prediction/tree/master/models) contains all saved models (*.json) and weights (*.h5) for all ligandIds. These are used with Keras.
 
-[root folder]
+[root folder](https://github.com/sbl-sdsc/metal-binding-prediction)
 * [modules.py](https://github.com/sbl-sdsc/metal-binding-prediction/blob/master/modules.py) stores all functions (encoded data generators, trainer, etc)
 
 * [metal_prediction.ipynb](https://github.com/sbl-sdsc/metal-binding-prediction/blob/master/metal_prediction.ipynb) train a keras model that predicts what type of metal ion a sequence binds to (first step)
