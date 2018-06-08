@@ -405,9 +405,14 @@ from Zihan.fofe import FofeVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 import keras
 import numpy as np
+import json
 
 def FOFE(s): 
-
+    
+    vocab_dic_fofe = {}
+    with open("./dictionaries/vocab_dict_fofe", 'r') as fp:
+        vocab_dic_fofe = json.load(fp)
+        
     ls = list(s)
     s2 = []
     for i in range(len(ls)-1):
