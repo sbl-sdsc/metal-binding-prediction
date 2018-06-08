@@ -53,4 +53,8 @@ PART2,MN,SGD,0.06,categorical_crossentropy,2.33,10,0.702
 PART2,MN,SGD,0.05,categorical_crossentropy,2.33,10,0.706
 PART2,MN,SGD,0.08,categorical_crossentropy,2.33,10,0.717
 PART2,MN,SGD,0.09,categorical_crossentropy,2.33,10,0.711
-PART2,MN,SGD,0.07,categorical_crossentropy,2.33,10,0.689Tuning,CA,SGD,0.08,categorical_crossentropy,2.33,10,0.43
+PART2,MN,SGD,0.07,categorical_crossentropy,2.33,10,0.689
+Tuning,CA,SGD,0.08,categorical_crossentropy,2.33,10,0.43
+Tuning,ZN,SGD,0.1,categorical_crossentropy,2.33,10,0.58
+Tuning,CA,SGD,0.1,categorical_crossentropy,2.33,10,0.027
+Tuning,CA,SGD,0.08,categorical_crossentropy,2.33,10,0.422

@@ -1,17 +1,5 @@
-
-# coding: utf-8
-
-# # Data Generator
-
-# In[ ]:
-
-
 import numpy as np
-import keras
-
-
-# In[ ]:
-
+import kera
 
 class OneHotGenerator(keras.utils.Sequence):
     
@@ -35,7 +23,6 @@ class OneHotGenerator(keras.utils.Sequence):
                 self.clusters[c] = []
             self.clusters[c].append(i)
         
-#         print ("Number of clusters", len(self.clusters.keys()))
         
         self.translator = translator
         
@@ -90,10 +77,6 @@ class OneHotGenerator(keras.utils.Sequence):
             
         return X, y
         
-
-
-# In[ ]:
-
 
 class ProtVecGenerator(keras.utils.Sequence):
     
@@ -174,10 +157,6 @@ class ProtVecGenerator(keras.utils.Sequence):
             
         return X, y     
 
-
-# In[ ]:
-
-
 class GenericGenerator(keras.utils.Sequence):
     
     'Gererate data for Keras'
@@ -230,9 +209,6 @@ class GenericGenerator(keras.utils.Sequence):
         
         X, y = self.generate_func(sequences_temp, labels_temp)
         return X, y
-
-
-# In[ ]:
 
 
 class GeneratorArray(keras.utils.Sequence):
@@ -355,7 +331,6 @@ class FOFEGenerator(keras.utils.Sequence):
             for j in range(len(i)-1):
                 cur_two_gram.append(i[j]+i[j+1])
             two_gram_ls.append(cur_two_gram)
-        #print (two_gram_ls[0])
     
         alpha = 0.95
         cutoff = 706
@@ -363,7 +338,6 @@ class FOFEGenerator(keras.utils.Sequence):
         fofe = FofeVectorizer(alpha)
         features = fofe.naive_transform(two_gram_ls, self.translator)
 
-        #print (features[0])
         seq_ls_cut_rev = []
         for i in two_gram_ls:
             seq_ls_cut_rev.append(list(reversed(i)))
@@ -397,10 +371,9 @@ class FOFEGenerator(keras.utils.Sequence):
                 if f < cutoff:
                     y[i,f,] = 1
                     
-        #print (y[0])
-
         return X, y
-            
+        
+        
 from Zihan.fofe import FofeVectorizer
 from sklearn.feature_extraction.text import CountVectorizer
 import keras
@@ -449,19 +422,8 @@ def FOFE(s):
 
     return X        
 
-                
-# # Model Trainer
-
-# In[ ]:
-
-
-
 
 import matplotlib.pyplot as plt
-
-
-# In[ ]:
-
 
 class Trainer():
     def __init__(self, 
@@ -502,36 +464,19 @@ class Trainer():
         # Assume the model is compiled for now
         self.model.fit_generator(epochs=epoch,
                                  generator=self.train_gen,
-#                                  validation_data=self.val_gen,
                                  callbacks=self.callbacks,
                                  use_multiprocessing=False, 
                                  workers=4,
                                  verbose=2)
         self.post_train(epoch)
-        
-#     def stop(self, error_string="Unspecified"):
-#         self.model.stop_training = True
-#         print ("Training stopped. Reason:", error_string)
-    
+
     def post_train(self, epoch):
         print ("[End of Training]")
         for c in self.callbacks:
             c.post_train(epoch=epoch, batch=len(self.train_gen), post_train_args=self.post_train_args)
 
-        
-        
-
-
-# # Evaluator
-
-# In[ ]:
-
-
 from sklearn.metrics import f1_score, precision_score, recall_score
 import numpy as np
-
-
-# In[ ]:
 
 
 class F1_history(keras.callbacks.Callback):
@@ -548,7 +493,6 @@ class F1_history(keras.callbacks.Callback):
         self.recalls = []        
         
     def on_train_begin(self, logs={}):
-#         self.epoch_count = 0
         self.validation_steps = len(self.validation_generator)
         self.f1_scores = []
         self.precisions = []
@@ -560,15 +504,12 @@ class F1_history(keras.callbacks.Callback):
 
     
     def on_epoch_begin(self, epoch, logs={}):
-#         self.batch_count = 0
-#         self.epoch_count += 1
         return
     
     def on_epoch_end(self, epoch, logs={}):
         return
 
     def on_batch_begin(self, batch, logs={}):
-#         self.batch_count += 1
         return
 
     def on_batch_end(self, batch, logs={}):
@@ -614,4 +555,3 @@ class F1_history(keras.callbacks.Callback):
                    + str(post_train_args['factor']) + ','
                    + str(epoch) + ','
                    + str(round(F1_over_epoch[-1], 3)) + '\n')
-
