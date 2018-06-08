@@ -10,7 +10,7 @@ Methods to predict metal binding sites in a protein by it's amino acid sequence
 **dictionaries** contains all dictionaries for sequence encoding.
 
 **logs** contains trained F1 score records as charts (*.png) and data (results.txt)
-* **results.txt** - format is: phrase,LigandID,optimizer,learning rate,loss function,threshold for MBS possibilities,# of epochs,F1
+* **results.txt** - format: phrase,LigandID,optimizer,learningrate,lossfunction,threshold for MBS prediction,#epochs,F1
 
 **models** contains all saved models (*.json) and weights (*.h5) for all ligandIds. These are used with Keras.
 
