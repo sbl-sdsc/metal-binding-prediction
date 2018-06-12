@@ -13,7 +13,6 @@ class FofeVectorizer():
                 try:
                     col_i = vocabulary[word]
                 except KeyError:
-                    # not in vocabulary: a one-letter word or a word from a test set
                     continue
                 x[row_i, col_i] += 1
         return x
