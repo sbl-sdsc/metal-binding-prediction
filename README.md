@@ -39,9 +39,9 @@ metal specific Convolutional Neural Network (with FOFE encoding) to train on
 (Total 8 metal specific CNNs), then the actual evaluation of the network. ]
 <br><br>
 ## The Repository
-[datasets:](https://github.com/sbl-sdsc/metal-binding-prediction/tree/master/datasets) contains all required parquet data files. 
+[datasets:](https://github.com/sbl-sdsc/metal-binding-prediction/tree/master/datasets) contains all required parquet data files.
 * **Metal_all_20180116.snappy.parquet** - is the raw dataframe
-* **Metal_all_20180601.parquet** - is the processed dataframe 
+* **Metal_all_20180601.parquet** - is the processed dataframe
 * **Metal_all_20180601_predicted.parquet** - is the processed dataframe with predicted ligandId for all sequences
 
 [dictionaries:](https://github.com/sbl-sdsc/metal-binding-prediction/tree/master/dictionaries) contains all dictionaries for sequence encoding.
@@ -57,10 +57,12 @@ metal specific Convolutional Neural Network (with FOFE encoding) to train on
 * [metal_prediction.ipynb](https://github.com/sbl-sdsc/metal-binding-prediction/blob/master/metal_prediction.ipynb) train a keras model that predicts what type of metal ion a sequence binds to (first step)
 
 * [MBS_prediction.ipynb](https://github.com/sbl-sdsc/metal-binding-prediction/blob/master/MBS_prediction.ipynb) train a keras model that predicts where in a sequence a metal ion binds to (second step)
-	
+
 * [predictor.ipynb](https://github.com/sbl-sdsc/metal-binding-prediction/blob/master/predictor.ipynb) does the prediction for both steps (metal type and fingerprints)
 
 
-
-
-
+## Run the Program
+On the Notebook : [predictor.ipynb](https://github.com/sbl-sdsc/metal-binding-prediction/blob/master/predictor.ipynb)
+<br>
+On the Terminal :
+> python3 predictor.py
