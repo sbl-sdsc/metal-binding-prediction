@@ -63,8 +63,8 @@ metal specific Convolutional Neural Network (with FOFE encoding) to train on
 
 ## Run the Program
 On the Notebook : [predictor.ipynb](https://github.com/sbl-sdsc/metal-binding-prediction/blob/master/predictor.ipynb)
-You can import your own dataset.
+(You can import your own dataset.)
 
 <br>
 On the Terminal :
-> python3 predictor.py [index(0,58206)]
+> python3 predictor.py [index up to 58206]
